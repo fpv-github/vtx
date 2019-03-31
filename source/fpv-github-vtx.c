@@ -106,7 +106,7 @@ volatile bool g_ButtonPress = false;
 void delay(void)
 {
     volatile uint32_t i = 0;
-    for (i = 0; i < 3200000; ++i)
+    for (i = 0; i < 1600000; ++i)
     {
         __asm("NOP"); /* delay */
     }
@@ -171,10 +171,6 @@ int main(void) {
     /* Define the init structure for the input switch pin */
     gpio_pin_config_t sw_config = {
         kGPIO_DigitalInput, 0,
-    };
-    /* Define the init structure for the output LED pin*/
-    gpio_pin_config_t led_config = {
-        kGPIO_DigitalOutput, 1,
     };
 
   	/* Init board hardware. */
