@@ -137,14 +137,15 @@ const volatile uint32_t pin[8] = {
 };
 
 int number[11][8]={
-      {1,1,1,0,1,1,1,0},      //0
-      {0,0,1,0,0,1,0,0},      //1
-      {1,0,1,1,1,0,1,0},      //2
+/* g, f, a, b, e, d, c, dot */
+      {1,0,1,1,1,1,1,0},      //0
+      {0,0,0,1,0,0,1,0},      //1
+      {0,1,1,1,1,1,0,0},      //2
       {1,0,1,1,0,1,1,0},      //3
-      {0,1,1,1,0,1,0,0},      //4
-      {1,1,0,1,0,1,1,0},      //5
-      {1,1,0,1,1,1,1,0},      //6
-      {1,0,1,0,0,1,0,0},      //7
+      {1,1,0,1,0,0,1,0},      //4
+      {1,1,1,0,0,1,1,0},      //5
+      {1,1,1,0,1,1,1,0},      //6
+      {0,0,1,1,0,0,1,0},      //7
       {1,1,1,1,1,1,1,0},      //8
       {1,1,1,1,0,1,1,0},      //9
       {0,0,0,0,0,0,0,1}       //.
@@ -173,7 +174,7 @@ void BOARD_SW_IRQ_HANDLER(void)
 int main(void) {
 	 /* Define the init structure for the input switch pin */
 	    gpio_pin_config_t sw_config = {
-	        kGPIO_DigitalInput, 0,
+	        kGPIO_DigitalInput, 1,
 	    };
 
   	/* Init board hardware. */
@@ -197,17 +198,17 @@ int main(void) {
 
 	while(1)
 	{
-		if(g_ButtonPress)
-		{
+		//if(g_ButtonPress)
+		//{
 			for(int i = 0; i<8;i++)
 			{
-				GPIO_PortToggle((void*)base[i], 1U << pin[i]);
+				GPIO_PortToggle((void*)base[i], number[4][i] << pin[i]);
 				PRINTF("Base %d, Pin %d\n",base[i],pin[i]);
 				//delay();
 				/* Reset state of button. */
-				g_ButtonPress = false;
+				//g_ButtonPress = false;
 			}
 			//for (int i=0; i<8; i++){led[i] = number[4][i];}
-		}
+		//}
 	}
 }
