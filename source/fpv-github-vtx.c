@@ -41,6 +41,9 @@
 #include "MK64F12.h"
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
+#include "fsl_port.h"
+#include "fsl_common.h"
+
 
 /*******************************************************************************
  * Definitions
@@ -168,10 +171,10 @@ void BOARD_SW_IRQ_HANDLER(void)
  * @brief   Application entry point.
  */
 int main(void) {
-    /* Define the init structure for the input switch pin */
-    gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0,
-    };
+	 /* Define the init structure for the input switch pin */
+	    gpio_pin_config_t sw_config = {
+	        kGPIO_DigitalInput, 0,
+	    };
 
   	/* Init board hardware. */
     BOARD_InitBootPins();
@@ -182,10 +185,29 @@ int main(void) {
 
     PRINTF("Starting program!\n");
 
-	for(int i = 0; i<8;i++){
-		GPIO_PortToggle((void*)base[i], 1U << pin[i]);
-		PRINTF("Value %d\n",pin[i]);
-		delay();
+/* Init input switch GPIO. */
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+	GPIO_SetPinInterruptConfig(BOARD_SW_GPIO, BOARD_SW_GPIO_PIN, kGPIO_InterruptFallingEdge);
+#else
+	PORT_SetPinInterruptConfig(BOARD_SW_PORT, BOARD_SW_GPIO_PIN, kPORT_InterruptFallingEdge);
+#endif
+	EnableIRQ(BOARD_SW_IRQ);
+	GPIO_PinInit(BOARD_SW_GPIO, BOARD_SW_GPIO_PIN, &sw_config);
+
+
+	while(1)
+	{
+		if(g_ButtonPress)
+		{
+			for(int i = 0; i<8;i++)
+			{
+				GPIO_PortToggle((void*)base[i], 1U << pin[i]);
+				PRINTF("Base %d, Pin %d\n",base[i],pin[i]);
+				//delay();
+				/* Reset state of button. */
+				g_ButtonPress = false;
+			}
+			//for (int i=0; i<8; i++){led[i] = number[4][i];}
+		}
 	}
-	//for (int i=0; i<8; i++){led[i] = number[4][i];}
 }
