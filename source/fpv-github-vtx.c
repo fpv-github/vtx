@@ -186,12 +186,10 @@ int main(void) {
 
     PRINTF("Starting program!\n");
 
-    //GPIO_PortToggle(LED_DISPLAY_DOT_GPIO, 1U << LED_DISPLAY_DOT_PIN);
-
-    	for(int i = 0; i<3;i++){
-    		GPIO_PortToggle((void*)base[i], 1U << pin[i]);
-    		PRINTF("Value %d\n",LED_DISPLAY_E_PIN);
-    		delay();
-    	}
-    	//for (int i=0; i<8; i++){led[i] = number[4][i];}
+	for(int i = 0; i<8;i++){
+		GPIO_PortToggle((void*)base[i], 1U << pin[i]);
+		PRINTF("Value %d\n",pin[i]);
+		delay();
+	}
+	//for (int i=0; i<8; i++){led[i] = number[4][i];}
 }
