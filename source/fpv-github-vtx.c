@@ -33,12 +33,14 @@
  * @brief   Application entry point.
  */
 #include <stdio.h>
+#include <stdint.h>
 #include "board.h"
 #include "peripherals.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "MK64F12.h"
 #include "fsl_debug_console.h"
+#include "fsl_gpio.h"
 
 /*******************************************************************************
  * Definitions
@@ -71,7 +73,7 @@
 #define LED_DISPLAY_E_PIN  2U
 #define LED_DISPLAY_D_PORT PORTB //A1
 #define LED_DISPLAY_D_GPIO GPIOB
-#define LED_DISPLAY_D_PIN  30U
+#define LED_DISPLAY_D_PIN  3U
 #define LED_DISPLAY_C_PORT PORTB //A2
 #define LED_DISPLAY_C_GPIO GPIOB
 #define LED_DISPLAY_C_PIN  10U
@@ -91,14 +93,7 @@
 /*!
  * @brief delay a while.
  */
-void delay(void)
-{
-    volatile uint32_t i = 0;
-    for (i = 0; i < 800000; ++i)
-    {
-        __asm("NOP"); /* delay */
-    }
-}
+void delay(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -108,7 +103,16 @@ volatile bool g_ButtonPress = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-const int base[8] = {
+void delay(void)
+{
+    volatile uint32_t i = 0;
+    for (i = 0; i < 3200000; ++i)
+    {
+        __asm("NOP"); /* delay */
+    }
+}
+
+const volatile uint32_t *base[8] = {
 		LED_DISPLAY_G_GPIO,
 		LED_DISPLAY_F_GPIO,
 		LED_DISPLAY_A_GPIO,
@@ -116,10 +120,9 @@ const int base[8] = {
 		LED_DISPLAY_E_GPIO,
 		LED_DISPLAY_D_GPIO,
 		LED_DISPLAY_C_GPIO,
-		LED_DISPLAY_DOT_GPIO,
+		LED_DISPLAY_DOT_GPIO
 };
-
-const int pin[8] = {
+const volatile uint32_t pin[8] = {
 		LED_DISPLAY_G_PIN,
 		LED_DISPLAY_F_PIN,
 		LED_DISPLAY_A_PIN,
@@ -150,12 +153,12 @@ int number[11][8]={
  */
 void BOARD_SW_IRQ_HANDLER(void)
 {
-    /* Clear external interrupt flag. */
+	/*Clear external interrupt flag.*/
     GPIO_PortClearInterruptFlags(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
-    /* Change state of button. */
+     /*Change state of button.*/
     g_ButtonPress = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
+ /*Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt*/
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -171,7 +174,7 @@ int main(void) {
     };
     /* Define the init structure for the output LED pin*/
     gpio_pin_config_t led_config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput, 1,
     };
 
   	/* Init board hardware. */
@@ -183,17 +186,12 @@ int main(void) {
 
     PRINTF("Starting program!\n");
 
-    /* Initialize all led's. */
-    for(int i = 0; i<8;i++){
-    	GPIO_PinInit((void*)base[i], pin[i], &led_config);
-    	PRINTF("Value of base[%d] = %d\n",i,base[i]);
-    	PRINTF("Value of pin[%d] = %d\n",i,pin[i]);
-    }
+    //GPIO_PortToggle(LED_DISPLAY_DOT_GPIO, 1U << LED_DISPLAY_DOT_PIN);
 
-    /* All led's off. */
-    for(int i = 0; i<8;i++){
-    	GPIO_PortClear((void*)base[i], 1U << pin[i]);
-    }
-
-    //for (int i=0; i<8; i++){led[i] = number[4][i];}
+    	for(int i = 0; i<3;i++){
+    		GPIO_PortToggle((void*)base[i], 1U << pin[i]);
+    		PRINTF("Value %d\n",LED_DISPLAY_E_PIN);
+    		delay();
+    	}
+    	//for (int i=0; i<8; i++){led[i] = number[4][i];}
 }
