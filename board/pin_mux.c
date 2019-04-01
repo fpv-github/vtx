@@ -360,7 +360,7 @@ BOARD_InitButtonsPins:
     direction: INPUT, gpio_interrupt: kPORT_InterruptFallingEdge, slew_rate: fast, open_drain: disable, drive_strength: low, pull_select: up, pull_enable: enable,
     passive_filter: disable}
   - {pin_num: '38', peripheral: GPIOA, signal: 'GPIO, 4', pin_signal: PTA4/LLWU_P3/FTM0_CH1/NMI_b/EZP_CS_b, direction: INPUT, gpio_interrupt: kPORT_InterruptFallingEdge,
-    slew_rate: fast, open_drain: disable, drive_strength: low, pull_select: down, pull_enable: disable, passive_filter: disable}
+    slew_rate: fast, open_drain: disable, drive_strength: high, pull_select: up, pull_enable: enable, passive_filter: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -392,16 +392,16 @@ void BOARD_InitButtonsPins(void)
     /* Initialize GPIO functionality on pin PTC6 (pin 78)  */
     GPIO_PinInit(BOARD_SW2_GPIO, BOARD_SW2_PIN, &SW2_config);
 
-    const port_pin_config_t SW3 = {/* Internal pull-up/down resistor is disabled */
-                                   kPORT_PullDisable,
+    const port_pin_config_t SW3 = {/* Internal pull-up resistor is enabled */
+                                   kPORT_PullUp,
                                    /* Fast slew rate is configured */
                                    kPORT_FastSlewRate,
                                    /* Passive filter is disabled */
                                    kPORT_PassiveFilterDisable,
                                    /* Open drain is disabled */
                                    kPORT_OpenDrainDisable,
-                                   /* Low drive strength is configured */
-                                   kPORT_LowDriveStrength,
+                                   /* High drive strength is configured */
+                                   kPORT_HighDriveStrength,
                                    /* Pin is configured as PTA4 */
                                    kPORT_MuxAsGpio,
                                    /* Pin Control Register fields [15:0] are not locked */

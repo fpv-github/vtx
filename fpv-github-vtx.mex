@@ -273,9 +273,9 @@
                         <pin_feature name="gpio_interrupt" value="kPORT_InterruptFallingEdge"/>
                         <pin_feature name="slew_rate" value="fast"/>
                         <pin_feature name="open_drain" value="disable"/>
-                        <pin_feature name="drive_strength" value="low"/>
-                        <pin_feature name="pull_select" value="down"/>
-                        <pin_feature name="pull_enable" value="disable"/>
+                        <pin_feature name="drive_strength" value="high"/>
+                        <pin_feature name="pull_select" value="up"/>
+                        <pin_feature name="pull_enable" value="enable"/>
                         <pin_feature name="passive_filter" value="disable"/>
                      </pin_features>
                   </pin>

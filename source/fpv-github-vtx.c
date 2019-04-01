@@ -150,6 +150,15 @@ int number[11][8]={
       {1,1,1,1,0,1,1,0},      //9
       {0,0,0,0,0,0,0,1}       //.
 };
+
+int letter[5][8]={
+/* g, f, a, b, e, d, c, dot */
+		{1,1,1,1,1,0,1,0},		//A
+		{1,1,0,0,1,1,1,0},		//B
+		{1,1,1,0,1,1,0,0},		//E
+		{1,1,1,0,1,0,0,0},		//F
+		{0,1,1,0,1,0,0,0}		//R
+};
 /*!
  * @brief Interrupt service function of switch.
  *
@@ -174,7 +183,7 @@ void BOARD_SW_IRQ_HANDLER(void)
 int main(void) {
 	 /* Define the init structure for the input switch pin */
 	    gpio_pin_config_t sw_config = {
-	        kGPIO_DigitalInput, 1,
+	        kGPIO_DigitalInput, 0,
 	    };
 
   	/* Init board hardware. */
@@ -186,7 +195,7 @@ int main(void) {
 
     PRINTF("Starting program!\n");
 
-/* Init input switch GPIO. */
+/* Init input switch GPIO.*/
 #if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
 	GPIO_SetPinInterruptConfig(BOARD_SW_GPIO, BOARD_SW_GPIO_PIN, kGPIO_InterruptFallingEdge);
 #else
@@ -198,17 +207,18 @@ int main(void) {
 
 	while(1)
 	{
-		//if(g_ButtonPress)
-		//{
-			for(int i = 0; i<8;i++)
-			{
-				GPIO_PortToggle((void*)base[i], number[4][i] << pin[i]);
-				PRINTF("Base %d, Pin %d\n",base[i],pin[i]);
+		if(g_ButtonPress)
+		{
+			//for(int i = 0; i<8;i++)
+			//{
+				PRINTF("button pressed");
+				//GPIO_PortToggle((void*)base[i], letter[4][i] << pin[i]);
+				//PRINTF("Base %d, Pin %d\n",base[i],pin[i]);
 				//delay();
 				/* Reset state of button. */
-				//g_ButtonPress = false;
-			}
+				g_ButtonPress = false;
+			//}
 			//for (int i=0; i<8; i++){led[i] = number[4][i];}
-		//}
+		}
 	}
 }
