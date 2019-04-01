@@ -102,6 +102,8 @@ void delay(void);
  ******************************************************************************/
 /* Whether the SW button is pressed */
 volatile bool g_ButtonPress = false;
+/* Channel variable */
+int channel = 0;
 
 /*******************************************************************************
  * Code
@@ -109,7 +111,7 @@ volatile bool g_ButtonPress = false;
 void delay(void)
 {
     volatile uint32_t i = 0;
-    for (i = 0; i < 1600000; ++i)
+    for (i = 0; i < 800000; ++i)
     {
         __asm("NOP"); /* delay */
     }
@@ -138,17 +140,17 @@ const volatile uint32_t pin[8] = {
 
 int number[11][8]={
 /* g, f, a, b, e, d, c, dot */
-      {1,0,1,1,1,1,1,0},      //0
-      {0,0,0,1,0,0,1,0},      //1
-      {0,1,1,1,1,1,0,0},      //2
-      {1,0,1,1,0,1,1,0},      //3
-      {1,1,0,1,0,0,1,0},      //4
-      {1,1,1,0,0,1,1,0},      //5
-      {1,1,1,0,1,1,1,0},      //6
-      {0,0,1,1,0,0,1,0},      //7
-      {1,1,1,1,1,1,1,0},      //8
+      {0,1,0,0,0,0,0,1},      //0
+	  {1,1,1,0,1,1,0,1},      //1
+      {1,0,0,0,0,0,1,1},      //2
+      {0,1,0,0,1,0,0,1},      //3
+      {0,0,1,0,1,1,0,1},      //4
+      {0,0,0,1,1,0,0,1},      //5
+      {0,0,0,1,0,0,0,1},      //6
+      {1,1,0,0,1,1,0,1},      //7
+      {0,0,0,0,0,0,0,1},      //8
       {1,1,1,1,0,1,1,0},      //9
-      {0,0,0,0,0,0,0,1}       //.
+      {1,1,1,1,1,1,1,0}       //.
 };
 
 int letter[5][8]={
@@ -162,7 +164,7 @@ int letter[5][8]={
 /*!
  * @brief Interrupt service function of switch.
  *
- * This function toggles the LED
+ * This function change the channnels.
  */
 void BOARD_SW_IRQ_HANDLER(void)
 {
@@ -188,6 +190,7 @@ int main(void) {
 
   	/* Init board hardware. */
     BOARD_InitBootPins();
+    BOARD_InitButtonsPins();
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
   	/* Init FSL debug console. */
@@ -203,22 +206,27 @@ int main(void) {
 #endif
 	EnableIRQ(BOARD_SW_IRQ);
 	GPIO_PinInit(BOARD_SW_GPIO, BOARD_SW_GPIO_PIN, &sw_config);
-
+	/*Set the stored digit*/
+	for(int i = 0; i<8;i++){GPIO_PortToggle((void*)base[i], number[0][i] << pin[i]);}
 
 	while(1)
 	{
 		if(g_ButtonPress)
 		{
-			//for(int i = 0; i<8;i++)
-			//{
-				PRINTF("button pressed");
-				//GPIO_PortToggle((void*)base[i], letter[4][i] << pin[i]);
-				//PRINTF("Base %d, Pin %d\n",base[i],pin[i]);
-				//delay();
-				/* Reset state of button. */
-				g_ButtonPress = false;
-			//}
-			//for (int i=0; i<8; i++){led[i] = number[4][i];}
+			for(int i = 0; i<8;i++)
+			{
+				GPIO_PortClear((void*)base[i], 0u << pin[i]);
+			}
+			/*Increment the channel*/
+			//channel++;
+			/*Paint the channel in the Led Display.*/
+			/*for(int i = 0; i<8;i++)
+			{
+
+				GPIO_PortToggle((void*)base[i], number[channel][i] << pin[i]);
+			}*/
+			/* Reset state of button. */
+			g_ButtonPress = false;
 		}
 	}
 }

@@ -141,21 +141,22 @@ void BOARD_InitBootPins(void)
 BOARD_InitPins:
 - options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '55', peripheral: GPIOB, signal: 'GPIO, 2', pin_signal: ADC0_SE12/PTB2/I2C0_SCL/UART0_RTS_b/ENET0_1588_TMR0/FTM0_FLT3, direction: OUTPUT, gpio_init_state: 'true',
+  - {pin_num: '55', peripheral: GPIOB, signal: 'GPIO, 2', pin_signal: ADC0_SE12/PTB2/I2C0_SCL/UART0_RTS_b/ENET0_1588_TMR0/FTM0_FLT3, direction: OUTPUT, gpio_init_state: 'false',
     drive_strength: low, pull_select: up, pull_enable: disable}
-  - {pin_num: '57', peripheral: GPIOB, signal: 'GPIO, 9', pin_signal: PTB9/SPI1_PCS1/UART3_CTS_b/FB_AD20, direction: OUTPUT, gpio_init_state: 'true', pull_select: up,
-    pull_enable: disable}
-  - {pin_num: '36', peripheral: GPIOA, signal: 'GPIO, 2', pin_signal: PTA2/UART0_TX/FTM0_CH7/JTAG_TDO/TRACE_SWO/EZP_DO, direction: OUTPUT, gpio_init_state: 'true',
+  - {pin_num: '57', peripheral: GPIOB, signal: 'GPIO, 9', pin_signal: PTB9/SPI1_PCS1/UART3_CTS_b/FB_AD20, direction: OUTPUT, gpio_init_state: 'false', drive_strength: low,
+    pull_select: up, pull_enable: disable}
+  - {pin_num: '36', peripheral: GPIOA, signal: 'GPIO, 2', pin_signal: PTA2/UART0_TX/FTM0_CH7/JTAG_TDO/TRACE_SWO/EZP_DO, direction: OUTPUT, gpio_init_state: 'false',
     open_drain: disable, drive_strength: low, pull_select: up, pull_enable: disable}
-  - {pin_num: '35', peripheral: GPIOA, signal: 'GPIO, 1', pin_signal: PTA1/UART0_RX/FTM0_CH6/JTAG_TDI/EZP_DI, direction: OUTPUT, gpio_init_state: 'true', drive_strength: low,
+  - {pin_num: '35', peripheral: GPIOA, signal: 'GPIO, 1', pin_signal: PTA1/UART0_RX/FTM0_CH6/JTAG_TDI/EZP_DI, direction: OUTPUT, gpio_init_state: 'false', drive_strength: low,
     pull_select: up, pull_enable: disable}
-  - {pin_num: '58', peripheral: GPIOB, signal: 'GPIO, 10', pin_signal: ADC1_SE14/PTB10/SPI1_PCS0/UART3_RX/FB_AD19/FTM0_FLT1, direction: OUTPUT, gpio_init_state: 'true',
+  - {pin_num: '58', peripheral: GPIOB, signal: 'GPIO, 10', pin_signal: ADC1_SE14/PTB10/SPI1_PCS0/UART3_RX/FB_AD19/FTM0_FLT1, direction: OUTPUT, gpio_init_state: 'false',
+    drive_strength: low, pull_select: up, pull_enable: disable}
+  - {pin_num: '59', peripheral: GPIOB, signal: 'GPIO, 11', pin_signal: ADC1_SE15/PTB11/SPI1_SCK/UART3_TX/FB_AD18/FTM0_FLT2, direction: OUTPUT, gpio_init_state: 'false',
+    drive_strength: low, pull_select: up, pull_enable: disable}
+  - {pin_num: '69', peripheral: GPIOB, signal: 'GPIO, 23', pin_signal: PTB23/SPI2_SIN/SPI0_PCS5/FB_AD28, direction: OUTPUT, gpio_init_state: 'false', drive_strength: low,
     pull_select: up, pull_enable: disable}
-  - {pin_num: '59', peripheral: GPIOB, signal: 'GPIO, 11', pin_signal: ADC1_SE15/PTB11/SPI1_SCK/UART3_TX/FB_AD18/FTM0_FLT2, direction: OUTPUT, gpio_init_state: 'true',
-    pull_select: up}
-  - {pin_num: '69', peripheral: GPIOB, signal: 'GPIO, 23', pin_signal: PTB23/SPI2_SIN/SPI0_PCS5/FB_AD28, direction: OUTPUT, gpio_init_state: 'true', pull_select: up}
   - {pin_num: '56', peripheral: GPIOB, signal: 'GPIO, 3', pin_signal: ADC0_SE13/PTB3/I2C0_SDA/UART0_CTS_b/UART0_COL_b/ENET0_1588_TMR1/FTM0_FLT0, direction: OUTPUT,
-    gpio_init_state: 'true', pull_select: up}
+    gpio_init_state: 'false', drive_strength: low, pull_select: up, pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -175,56 +176,56 @@ void BOARD_InitPins(void)
 
     gpio_pin_config_t gpioa_pin35_config = {
         .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+        .outputLogic = 0U
     };
     /* Initialize GPIO functionality on pin PTA1 (pin 35)  */
     GPIO_PinInit(GPIOA, 1U, &gpioa_pin35_config);
 
     gpio_pin_config_t gpioa_pin36_config = {
         .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+        .outputLogic = 0U
     };
     /* Initialize GPIO functionality on pin PTA2 (pin 36)  */
     GPIO_PinInit(GPIOA, 2U, &gpioa_pin36_config);
 
     gpio_pin_config_t ADC0_SE12_config = {
         .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+        .outputLogic = 0U
     };
     /* Initialize GPIO functionality on pin PTB2 (pin 55)  */
     GPIO_PinInit(BOARD_ADC0_SE12_GPIO, BOARD_ADC0_SE12_PIN, &ADC0_SE12_config);
 
     gpio_pin_config_t gpiob_pin56_config = {
         .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+        .outputLogic = 0U
     };
     /* Initialize GPIO functionality on pin PTB3 (pin 56)  */
     GPIO_PinInit(GPIOB, 3U, &gpiob_pin56_config);
 
     gpio_pin_config_t gpiob_pin57_config = {
         .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+        .outputLogic = 0U
     };
     /* Initialize GPIO functionality on pin PTB9 (pin 57)  */
     GPIO_PinInit(GPIOB, 9U, &gpiob_pin57_config);
 
     gpio_pin_config_t gpiob_pin58_config = {
         .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+        .outputLogic = 0U
     };
     /* Initialize GPIO functionality on pin PTB10 (pin 58)  */
     GPIO_PinInit(GPIOB, 10U, &gpiob_pin58_config);
 
     gpio_pin_config_t gpiob_pin59_config = {
         .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+        .outputLogic = 0U
     };
     /* Initialize GPIO functionality on pin PTB11 (pin 59)  */
     GPIO_PinInit(GPIOB, 11U, &gpiob_pin59_config);
 
     gpio_pin_config_t gpiob_pin69_config = {
         .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+        .outputLogic = 0U
     };
     /* Initialize GPIO functionality on pin PTB23 (pin 69)  */
     GPIO_PinInit(GPIOB, 23U, &gpiob_pin69_config);
@@ -274,7 +275,7 @@ void BOARD_InitPins(void)
 
     PORTB->PCR[10] = ((PORTB->PCR[10] &
                        /* Mask bits to zero which are setting */
-                       (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
+                       (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK | PORT_PCR_ISF_MASK)))
 
                       /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
                        * corresponding PE field is set. */
@@ -282,18 +283,30 @@ void BOARD_InitPins(void)
 
                       /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding
                        * pin. */
-                      | PORT_PCR_PE(kPORT_PullDisable));
+                      | PORT_PCR_PE(kPORT_PullDisable)
+
+                      /* Drive Strength Enable: Low drive strength is configured on the corresponding pin, if pin
+                       * is configured as a digital output. */
+                      | PORT_PCR_DSE(kPORT_LowDriveStrength));
 
     /* PORTB11 (pin 59) is configured as PTB11 */
     PORT_SetPinMux(PORTB, 11U, kPORT_MuxAsGpio);
 
     PORTB->PCR[11] = ((PORTB->PCR[11] &
                        /* Mask bits to zero which are setting */
-                       (~(PORT_PCR_PS_MASK | PORT_PCR_ISF_MASK)))
+                       (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK | PORT_PCR_ISF_MASK)))
 
                       /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
                        * corresponding PE field is set. */
-                      | PORT_PCR_PS(kPORT_PullUp));
+                      | PORT_PCR_PS(kPORT_PullUp)
+
+                      /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding
+                       * pin. */
+                      | PORT_PCR_PE(kPORT_PullDisable)
+
+                      /* Drive Strength Enable: Low drive strength is configured on the corresponding pin, if pin
+                       * is configured as a digital output. */
+                      | PORT_PCR_DSE(kPORT_LowDriveStrength));
 
     /* PORTB2 (pin 55) is configured as PTB2 */
     PORT_SetPinMux(BOARD_ADC0_SE12_PORT, BOARD_ADC0_SE12_PIN, kPORT_MuxAsGpio);
@@ -318,36 +331,55 @@ void BOARD_InitPins(void)
 
     PORTB->PCR[23] = ((PORTB->PCR[23] &
                        /* Mask bits to zero which are setting */
-                       (~(PORT_PCR_PS_MASK | PORT_PCR_ISF_MASK)))
+                       (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK | PORT_PCR_ISF_MASK)))
 
                       /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
                        * corresponding PE field is set. */
-                      | PORT_PCR_PS(kPORT_PullUp));
+                      | PORT_PCR_PS(kPORT_PullUp)
+
+                      /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding
+                       * pin. */
+                      | PORT_PCR_PE(kPORT_PullDisable)
+
+                      /* Drive Strength Enable: Low drive strength is configured on the corresponding pin, if pin
+                       * is configured as a digital output. */
+                      | PORT_PCR_DSE(kPORT_LowDriveStrength));
 
     /* PORTB3 (pin 56) is configured as PTB3 */
     PORT_SetPinMux(PORTB, 3U, kPORT_MuxAsGpio);
 
     PORTB->PCR[3] = ((PORTB->PCR[3] &
                       /* Mask bits to zero which are setting */
-                      (~(PORT_PCR_PS_MASK | PORT_PCR_ISF_MASK)))
-
-                     /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
-                      * corresponding PE field is set. */
-                     | PORT_PCR_PS(kPORT_PullUp));
-
-    /* PORTB9 (pin 57) is configured as PTB9 */
-    PORT_SetPinMux(PORTB, 9U, kPORT_MuxAsGpio);
-
-    PORTB->PCR[9] = ((PORTB->PCR[9] &
-                      /* Mask bits to zero which are setting */
-                      (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
+                      (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK | PORT_PCR_ISF_MASK)))
 
                      /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
                       * corresponding PE field is set. */
                      | PORT_PCR_PS(kPORT_PullUp)
 
                      /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding pin. */
-                     | PORT_PCR_PE(kPORT_PullDisable));
+                     | PORT_PCR_PE(kPORT_PullDisable)
+
+                     /* Drive Strength Enable: Low drive strength is configured on the corresponding pin, if pin
+                      * is configured as a digital output. */
+                     | PORT_PCR_DSE(kPORT_LowDriveStrength));
+
+    /* PORTB9 (pin 57) is configured as PTB9 */
+    PORT_SetPinMux(PORTB, 9U, kPORT_MuxAsGpio);
+
+    PORTB->PCR[9] = ((PORTB->PCR[9] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK | PORT_PCR_ISF_MASK)))
+
+                     /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
+                      * corresponding PE field is set. */
+                     | PORT_PCR_PS(kPORT_PullUp)
+
+                     /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding pin. */
+                     | PORT_PCR_PE(kPORT_PullDisable)
+
+                     /* Drive Strength Enable: Low drive strength is configured on the corresponding pin, if pin
+                      * is configured as a digital output. */
+                     | PORT_PCR_DSE(kPORT_LowDriveStrength));
 }
 
 /* clang-format off */

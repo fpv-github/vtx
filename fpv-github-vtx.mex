@@ -155,7 +155,7 @@
                   <pin peripheral="GPIOB" signal="GPIO, 2" pin_num="55" pin_signal="ADC0_SE12/PTB2/I2C0_SCL/UART0_RTS_b/ENET0_1588_TMR0/FTM0_FLT3">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
-                        <pin_feature name="gpio_init_state" value="true"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
                         <pin_feature name="drive_strength" value="low"/>
                         <pin_feature name="pull_select" value="up"/>
                         <pin_feature name="pull_enable" value="disable"/>
@@ -164,7 +164,8 @@
                   <pin peripheral="GPIOB" signal="GPIO, 9" pin_num="57" pin_signal="PTB9/SPI1_PCS1/UART3_CTS_b/FB_AD20">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
-                        <pin_feature name="gpio_init_state" value="true"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
+                        <pin_feature name="drive_strength" value="low"/>
                         <pin_feature name="pull_select" value="up"/>
                         <pin_feature name="pull_enable" value="disable"/>
                      </pin_features>
@@ -172,7 +173,7 @@
                   <pin peripheral="GPIOA" signal="GPIO, 2" pin_num="36" pin_signal="PTA2/UART0_TX/FTM0_CH7/JTAG_TDO/TRACE_SWO/EZP_DO">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
-                        <pin_feature name="gpio_init_state" value="true"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
                         <pin_feature name="open_drain" value="disable"/>
                         <pin_feature name="drive_strength" value="low"/>
                         <pin_feature name="pull_select" value="up"/>
@@ -182,7 +183,7 @@
                   <pin peripheral="GPIOA" signal="GPIO, 1" pin_num="35" pin_signal="PTA1/UART0_RX/FTM0_CH6/JTAG_TDI/EZP_DI">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
-                        <pin_feature name="gpio_init_state" value="true"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
                         <pin_feature name="drive_strength" value="low"/>
                         <pin_feature name="pull_select" value="up"/>
                         <pin_feature name="pull_enable" value="disable"/>
@@ -191,7 +192,8 @@
                   <pin peripheral="GPIOB" signal="GPIO, 10" pin_num="58" pin_signal="ADC1_SE14/PTB10/SPI1_PCS0/UART3_RX/FB_AD19/FTM0_FLT1">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
-                        <pin_feature name="gpio_init_state" value="true"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
+                        <pin_feature name="drive_strength" value="low"/>
                         <pin_feature name="pull_select" value="up"/>
                         <pin_feature name="pull_enable" value="disable"/>
                      </pin_features>
@@ -199,22 +201,28 @@
                   <pin peripheral="GPIOB" signal="GPIO, 11" pin_num="59" pin_signal="ADC1_SE15/PTB11/SPI1_SCK/UART3_TX/FB_AD18/FTM0_FLT2">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
-                        <pin_feature name="gpio_init_state" value="true"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
+                        <pin_feature name="drive_strength" value="low"/>
                         <pin_feature name="pull_select" value="up"/>
+                        <pin_feature name="pull_enable" value="disable"/>
                      </pin_features>
                   </pin>
                   <pin peripheral="GPIOB" signal="GPIO, 23" pin_num="69" pin_signal="PTB23/SPI2_SIN/SPI0_PCS5/FB_AD28">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
-                        <pin_feature name="gpio_init_state" value="true"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
+                        <pin_feature name="drive_strength" value="low"/>
                         <pin_feature name="pull_select" value="up"/>
+                        <pin_feature name="pull_enable" value="disable"/>
                      </pin_features>
                   </pin>
                   <pin peripheral="GPIOB" signal="GPIO, 3" pin_num="56" pin_signal="ADC0_SE13/PTB3/I2C0_SDA/UART0_CTS_b/UART0_COL_b/ENET0_1588_TMR1/FTM0_FLT0">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
-                        <pin_feature name="gpio_init_state" value="true"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
+                        <pin_feature name="drive_strength" value="low"/>
                         <pin_feature name="pull_select" value="up"/>
+                        <pin_feature name="pull_enable" value="disable"/>
                      </pin_features>
                   </pin>
                </pins>
