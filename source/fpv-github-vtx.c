@@ -56,7 +56,7 @@
         D2  D3       D4  D5
 
 
-		e   d   com  c   dot
+		e   d   com  c   h
         A0  A1       A2  A3
 */
 #define LED_DISPLAY_G_PORT PORTB //D2
@@ -80,9 +80,9 @@
 #define LED_DISPLAY_C_PORT PORTB //A2
 #define LED_DISPLAY_C_GPIO GPIOB
 #define LED_DISPLAY_C_PIN  10U
-#define LED_DISPLAY_DOT_PORT PORTB //A3
-#define LED_DISPLAY_DOT_GPIO GPIOB
-#define LED_DISPLAY_DOT_PIN  11U
+#define LED_DISPLAY_H_PORT PORTB //A3
+#define LED_DISPLAY_H_GPIO GPIOB
+#define LED_DISPLAY_H_PIN  11U
 
 #define BOARD_SW_GPIO BOARD_SW3_GPIO
 #define BOARD_SW_PORT BOARD_SW3_PORT
@@ -103,7 +103,7 @@ void delay(void);
 /* Whether the SW button is pressed */
 volatile bool g_ButtonPress = false;
 /* Channel variable */
-int channel = 0;
+int ch = 0;
 
 /*******************************************************************************
  * Code
@@ -125,7 +125,7 @@ const volatile uint32_t *base[8] = {
 		LED_DISPLAY_E_GPIO,
 		LED_DISPLAY_D_GPIO,
 		LED_DISPLAY_C_GPIO,
-		LED_DISPLAY_DOT_GPIO
+		LED_DISPLAY_H_GPIO
 };
 const volatile uint32_t pin[8] = {
 		LED_DISPLAY_G_PIN,
@@ -135,26 +135,24 @@ const volatile uint32_t pin[8] = {
 		LED_DISPLAY_E_PIN,
 		LED_DISPLAY_D_PIN,
 		LED_DISPLAY_C_PIN,
-		LED_DISPLAY_DOT_PIN
+		LED_DISPLAY_H_PIN
 };
 
-int number[11][8]={
-/* g, f, a, b, e, d, c, dot */
-      {0,1,0,0,0,0,0,1},      //0
-	  {1,1,1,0,1,1,0,1},      //1
-      {1,0,0,0,0,0,1,1},      //2
-      {0,1,0,0,1,0,0,1},      //3
-      {0,0,1,0,1,1,0,1},      //4
-      {0,0,0,1,1,0,0,1},      //5
-      {0,0,0,1,0,0,0,1},      //6
-      {1,1,0,0,1,1,0,1},      //7
-      {0,0,0,0,0,0,0,1},      //8
-      {1,1,1,1,0,1,1,0},      //9
-      {1,1,1,1,1,1,1,0}       //.
+/* g, f, a, b, e, d, c, h */
+int channel[8][8]={
+      {0,0,0,1,0,0,1,0},      //1
+      {0,1,1,1,1,1,0,0},      //2
+      {0,1,1,1,0,1,1,0},      //3
+      {1,1,0,1,0,0,1,0},      //4
+      {1,1,1,0,0,1,1,0},      //5
+      {1,1,1,0,1,1,1,0},      //6
+      {0,0,1,1,0,0,1,0},      //7
+      {1,1,1,1,1,1,1,0}       //8
 };
 
-int letter[5][8]={
-/* g, f, a, b, e, d, c, dot */
+int dot[8] = {0,0,0,0,0,0,0,1};  //.
+
+int band[5][8]={
 		{1,1,1,1,1,0,1,0},		//A
 		{1,1,0,0,1,1,1,0},		//B
 		{1,1,1,0,1,1,0,0},		//E
@@ -207,26 +205,26 @@ int main(void) {
 	EnableIRQ(BOARD_SW_IRQ);
 	GPIO_PinInit(BOARD_SW_GPIO, BOARD_SW_GPIO_PIN, &sw_config);
 	/*Set the stored digit*/
-	for(int i = 0; i<8;i++){GPIO_PortToggle((void*)base[i], number[0][i] << pin[i]);}
+	for(int i = 0; i<8;i++){GPIO_PortToggle((void*)base[i], channel[0][i] << pin[i]);}
 
-	while(1)
-	{
-		if(g_ButtonPress)
-		{
-			for(int i = 0; i<8;i++)
-			{
-				GPIO_PortClear((void*)base[i], 0u << pin[i]);
+
+	while(1){
+		if(g_ButtonPress){
+			for(int i = 0; i<8;i++)	{
+				GPIO_PortSet((void*)base[i], 1u << pin[i]);
 			}
 			/*Increment the channel*/
-			//channel++;
+			ch++;
 			/*Paint the channel in the Led Display.*/
-			/*for(int i = 0; i<8;i++)
-			{
-
-				GPIO_PortToggle((void*)base[i], number[channel][i] << pin[i]);
-			}*/
+			for(int i = 0; i<8;i++) {
+				GPIO_PortToggle((void*)base[i], channel[ch][i] << pin[i]);
+			}
 			/* Reset state of button. */
 			g_ButtonPress = false;
+			/* Reset the channel variable */
+			if (ch == 8) {
+				ch = 0;
+			}
 		}
 	}
 }
