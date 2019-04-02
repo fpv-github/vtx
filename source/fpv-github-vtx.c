@@ -204,21 +204,18 @@ int main(void) {
 #endif
 	EnableIRQ(BOARD_SW_IRQ);
 	GPIO_PinInit(BOARD_SW_GPIO, BOARD_SW_GPIO_PIN, &sw_config);
-	/*Set the stored digit*/
+	/* Set the initial channel */
 	for(int i = 0; i<8;i++){GPIO_PortToggle((void*)base[i], channel[0][i] << pin[i]);}
 
 
 	while(1){
 		if(g_ButtonPress){
-			for(int i = 0; i<8;i++)	{
-				GPIO_PortSet((void*)base[i], 1u << pin[i]);
-			}
-			/*Increment the channel*/
+			/* Turn off all leds */
+			for(int i = 0; i<8;i++)	{GPIO_PortSet((void*)base[i], 1u << pin[i]);}
+			/* Increment the channel */
 			ch++;
 			/*Paint the channel in the Led Display.*/
-			for(int i = 0; i<8;i++) {
-				GPIO_PortToggle((void*)base[i], channel[ch][i] << pin[i]);
-			}
+			for(int i = 0; i<8;i++) {GPIO_PortToggle((void*)base[i], channel[ch][i] << pin[i]);}
 			/* Reset state of button. */
 			g_ButtonPress = false;
 			/* Reset the channel variable */
